@@ -47,7 +47,7 @@ public class Complex {
 
     @Override
     public String toString() {
-        return "re = " + re + "; im = " + im + "i";
+        return "re = " + re + "; im = " + im + "*i";
     }
 
     public double getIm() {

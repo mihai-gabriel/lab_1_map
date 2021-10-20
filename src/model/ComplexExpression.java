@@ -3,8 +3,8 @@ package model;
 import java.util.Arrays;
 
 public abstract class ComplexExpression {
-    private Operation op;
-    private Complex[] args;
+    private final Operation op;
+    private final Complex[] args;
 
     public ComplexExpression(Operation operation, Complex[] numbers) {
         this.op = operation;

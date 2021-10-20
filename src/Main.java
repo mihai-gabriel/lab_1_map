@@ -1,6 +1,6 @@
 import model.ComplexExpression;
-import model.CustomException;
-import model.ExpressionParser;
+import exceptions.CustomException;
+import service.ExpressionParser;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,7 +8,7 @@ public class Main {
             ExpressionParser ep = new ExpressionParser();
             ComplexExpression exp = ep.parseExp(args);
 
-            System.out.println("Rezultatul este: " + exp.execute());
+            System.out.println("Result: " + exp.execute());
         } catch (CustomException e) {
             System.out.println(e.getMessage());
         }

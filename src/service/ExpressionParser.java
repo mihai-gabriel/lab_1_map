@@ -1,11 +1,21 @@
-package model;
+package service;
 
+
+import exceptions.CustomException;
+import model.Complex;
+import model.ComplexExpression;
+import model.Operation;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ExpressionParser {
+    private static final String PATTERN1 = "^(-?[0-9]+(\\.[0-9]+)?)(([+-]([0-9]+(\\.[0-9]+)?)?)(\\*)?i)$";  // both re and im
+    public static final String PATTERN2 = "(([+-])?[0-9]+(\\.[0-9]+)?)?(\\*)?i$"; // only im, e.g. (2+i), cannot be '+/-i'
+    public static final String PATTERN3 = "(-?[0-9]+(\\.[0-9]+)?)"; // only re
+    public static final String ALL_PATTERNS = "^(-?[0-9]+)?(\\.[0-9]+)?([+-])?(([0-9]+(\\.[0-9]+)?\\*)?i)?$"; // everything
+
 
     public ComplexExpression parseExp(String[] args) throws CustomException {
         if (expressionValid(args)) {
@@ -30,9 +40,9 @@ public class ExpressionParser {
         Complex[] result = new Complex[args.length / 2 + 1];
         int counter = 0;
 
-        Pattern pattern1 = Pattern.compile("^(-?[0-9]+(\\.[0-9]+)?)(([+-]([0-9]+(\\.[0-9]+)?)?)(\\*)?i)$"); // both re and im
-        Pattern pattern2 = Pattern.compile("(([+-])?[0-9]+(\\.[0-9]+)?)?(\\*)?i$"); // only im (2+i), not covering only i
-        Pattern pattern3 = Pattern.compile("(-?[0-9]+(\\.[0-9]+)?)"); // only re
+        Pattern pattern1 = Pattern.compile(PATTERN1);
+        Pattern pattern2 = Pattern.compile(PATTERN2);
+        Pattern pattern3 = Pattern.compile(PATTERN3);
 
 
         for (int i = 0; i < args.length; i += 2) {
@@ -63,8 +73,8 @@ public class ExpressionParser {
         if (args.length % 2 == 0)
             return false;
 
-        if (args.length == 1)
-            return complexNrValid(args[0]);
+        if (args.length <= 2)
+            return false;
 
         String operator = args[1];
 
@@ -89,6 +99,6 @@ public class ExpressionParser {
 
     private boolean complexNrValid(String complexNr) {
         // match: signed digits[.digits] +/- digits[.digits]*i
-        return complexNr.matches("^(-?[0-9]+)?(\\.[0-9]+)?([+-])?(([0-9]+(\\.[0-9]+)?\\*)?i)?$");
+        return complexNr.matches(ALL_PATTERNS);
     }
 }

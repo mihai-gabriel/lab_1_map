@@ -1,4 +1,6 @@
-package model;
+package service;
+
+import model.*;
 
 public class ExpressionFactory {
     private static ExpressionFactory instance = null;
@@ -6,13 +8,14 @@ public class ExpressionFactory {
     private ExpressionFactory() {}
 
     public static ExpressionFactory getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new ExpressionFactory();
+        }
 
         return instance;
     }
 
-    public static ComplexExpression createExpression(Operation operation, Complex[] args) {
+    public ComplexExpression createExpression(Operation operation, Complex[] args) {
         ComplexExpression exp;
 
         switch (operation) {
@@ -24,4 +27,5 @@ public class ExpressionFactory {
 
         return exp;
     }
+
 }
